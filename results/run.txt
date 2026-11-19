@@ -1,0 +1,50 @@
+Portfolio: Kompleksitet og datastrukturer
+Tidspunkt: 2026-11-19T13:49:09.708244+01:00[Europe/Copenhagen]
+Java: 25+36-3489
+JVM: OpenJDK 64-Bit Server VM
+System: Mac OS X 27.0.1 / aarch64
+Opvarmning: 3 runder; måling: 5 runder; tabeller viser median.
+ms/batch er hele gentagelsen; ns/op er batchtid / antal operationer.
+
+1. ArrayList vs LinkedList: 500.000 elementer ved start af hver runde
+Operation                Struktur          Antal      ms/batch           ns/op
+get(250000)              ArrayList           200         0.006            28.3
+add(250000, 99)          ArrayList           200         3.758         18790.0
+remove(250000)           ArrayList           200         3.751         18753.5
+add(0, 99)               ArrayList         10000       379.114         37911.4
+get(250000)              LinkedList          200        84.634        423171.3
+add(250000, 99)          LinkedList          200        84.115        420575.0
+remove(250000)           LinkedList          200        85.473        427367.1
+add(0, 99)               LinkedList        10000         0.066             6.6
+
+2. contains: samme værdier fra 0 til 499.999 i begge strukturer
+Operation                Struktur          Antal      ms/batch           ns/op
+contains(0)              ArrayList          1000         0.027            26.8
+contains(499999)         ArrayList          1000       173.227        173227.3
+contains(-1)             ArrayList          1000       173.534        173534.2
+contains(0)              HashSet            1000         0.035            34.5
+contains(499999)         HashSet            1000         0.027            27.4
+contains(-1)             HashSet            1000         0.028            28.0
+
+3. Student: samme id betyder samme entitet, også med et andet navn
+TreeSet iteration: [7: Bo, 18: Clara, 42: Anna]
+  Tilføj dublet: false; find id 18: true; fjern id 18: true; størrelse: 2
+HashSet iteration: [18: Clara, 7: Bo, 42: Anna]
+  Tilføj dublet: false; find id 18: true; fjern id 18: true; størrelse: 2
+
+4. TreeSet vs HashSet: 100.000 forskellige Student-objekter
+Operation                Struktur          Antal      ms/batch           ns/op
+add (alle)               TreeSet          100000        18.694           186.9
+contains (alle)          TreeSet          100000        19.229           192.3
+remove (alle)            TreeSet          100000        19.255           192.5
+add (alle)               HashSet          100000         2.558            25.6
+contains (alle)          HashSet          100000         0.569             5.7
+remove (alle)            HashSet          100000         1.204            12.0
+
+5. PriorityQueue og ArrayDeque: indsæt 30, 10, 20
+PriorityQueue poll(): [10, 20, 30]
+ArrayDeque som kø poll(): [30, 10, 20]
+ArrayDeque som stak pop(): [20, 10, 30]
+
+Alle fem målinger pr. række er gemt i results/measurements.csv
+Alle kontroller af størrelser og resultater bestod.
